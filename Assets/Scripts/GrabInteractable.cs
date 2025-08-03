@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
@@ -6,9 +7,9 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 public class GrabInteractable : XRGrabInteractable
 {
     private Outline _objectOutline;
-    protected override void Awake()
+
+    private void Start()
     {
-        base.Awake();
         _objectOutline = GetComponent<Outline>();
         _objectOutline.enabled = false;
         _objectOutline.OutlineColor = GameManager.instance.colorLibrary[GameManager.ColorType.GenericInteractable];
