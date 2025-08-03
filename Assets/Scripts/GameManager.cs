@@ -8,9 +8,13 @@ public class GameManager : MonoBehaviour
     //Singleton
     public static GameManager instance;
     
-    // ColorLib
+    // References and Settings
+    [Header("Settings")]
     public List<ColorEntry> gameManagerColorLib = new();
     public Dictionary<ColorType, Color> colorLibrary = new ();
+    public bool CreateAttachTransforms;
+    public Transform ClipTransform;
+    public float attachThreshold;
     
     
     private void Awake()
@@ -27,6 +31,7 @@ public class GameManager : MonoBehaviour
     {
         GenericInteractable,
         SimpleInteractable,
+        PlateInteractable
     }
 
     [Serializable]

@@ -6,13 +6,15 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 [RequireComponent(typeof(Outline))]
 public class GrabInteractable : XRGrabInteractable
 {
-    private Outline _objectOutline;
+    protected Outline _objectOutline;
 
-    private void Start()
+    protected virtual void Start()
     {
         _objectOutline = GetComponent<Outline>();
         _objectOutline.enabled = false;
         _objectOutline.OutlineColor = GameManager.instance.colorLibrary[GameManager.ColorType.GenericInteractable];
+
+        useDynamicAttach = true;
     }
 
     protected override void OnHoverEntered(HoverEnterEventArgs args)

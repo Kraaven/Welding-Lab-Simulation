@@ -46,7 +46,7 @@ public class AttachPointCreator : MonoBehaviour
 
     void TryAddUnique(Vector3 point, HashSet<Vector3> pointSet)
     {
-        if (pointSet.Add(point))
+        if (pointSet.Add(point) && GameManager.instance.CreateAttachTransforms)
         {
             CreateEmptyMarker(point);
         }
