@@ -8,6 +8,8 @@ public class MetalPlate : MonoBehaviour
     public bool OnClip = false;
 
     private Rigidbody rb;
+    
+    private List<MetalPlate> connectedPlates = new();
 
     void Start()
     {
@@ -74,6 +76,7 @@ public class MetalPlate : MonoBehaviour
         {
             rb.isKinematic = true;
             OnClip = true;
+            foreach (var plate in connectedPlates) { plate.OnClip = true; }
             SnapToClipPosition(GameManager.instance.ClipTransform.position);
         }
         else if (other.gameObject.CompareTag("MetalPlate"))
@@ -100,15 +103,13 @@ public class MetalPlate : MonoBehaviour
         Vector3 closestThisPoint = Vector3.zero;
         Vector3 closestOtherPoint = Vector3.zero;
         float minSqrDist = float.MaxValue;
-
-        // Find closest attach points between the two plates
+        
         foreach (var thisCreator in attachedPlatesPoints)
         {
             if (thisCreator == null || thisCreator.attachPoints == null) continue;
             
             foreach (var thisPoint in thisCreator.attachPoints)
             {
-                // FIXED: Convert local attach point to world position
                 Vector3 thisWorld = thisCreator.transform.TransformPoint(thisPoint);
 
                 foreach (var otherCreator in otherPlate.attachedPlatesPoints)
@@ -117,7 +118,6 @@ public class MetalPlate : MonoBehaviour
                     
                     foreach (var otherPoint in otherCreator.attachPoints)
                     {
-                        // FIXED: Convert local attach point to world position
                         Vector3 otherWorld = otherCreator.transform.TransformPoint(otherPoint);
                         float sqrDist = (thisWorld - otherWorld).sqrMagnitude;
 
@@ -151,8 +151,7 @@ public class MetalPlate : MonoBehaviour
 
             Debug.Log($"Plates snapped! Offset applied: {offset}");
             
-            // Bind this plate to the clipped plate
-            BindPlates(otherPlate);
+            
         }
     }
 
@@ -162,8 +161,9 @@ public class MetalPlate : MonoBehaviour
 
         // Set parent relationship
         transform.SetParent(clippedPlate.transform);
-        OnClip = true;
-        
+        clippedPlate.attachedPlatesPoints.AddRange(attachedPlatesPoints);
+        clippedPlate.connectedPlates.Add(this);
+        clippedPlate.GetComponent<MetalPlateGrabInteractable>().colliders.Add(this.GetComponent<Collider>());
         Destroy(gameObject.GetComponent<MetalPlateGrabInteractable>());
         Destroy(rb);
 
