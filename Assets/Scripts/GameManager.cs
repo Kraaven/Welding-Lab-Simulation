@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.XR.CoreUtils.Collections;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class GameManager : MonoBehaviour
     public bool CreateAttachTransforms;
     public Transform ClipTransform;
     public float attachThreshold;
+    public XRInteractionManager XRInteractionManager;
+    public Material ColdWeld;
     
     
     private void Awake()

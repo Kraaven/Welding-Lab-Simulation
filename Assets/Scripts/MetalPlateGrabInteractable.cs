@@ -19,4 +19,11 @@ public class MetalPlateGrabInteractable : GrabInteractable
         _rigidbody.isKinematic = false;
         _metalPlate.OnClip = false;
     }
+    
+    public void RefreshColliders()
+    {
+        colliders.Clear();
+        GetComponentsInChildren<Collider>(false, colliders);
+    }
+
 }

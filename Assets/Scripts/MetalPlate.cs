@@ -1,20 +1,25 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Transformers;
 
 public class MetalPlate : MonoBehaviour
 {
     public List<AttachPointCreator> attachedPlatesPoints = new();
     public bool OnClip = false;
+    public AudioClip click;
 
     private Rigidbody rb;
     
     private List<MetalPlate> connectedPlates = new();
+    AudioSource audioSource;
 
     void Start()
     {
         attachedPlatesPoints.Add(GetComponent<AttachPointCreator>());
         rb = GetComponent<Rigidbody>();
+        audioSource = this.gameObject.AddComponent<AudioSource>();
     }
 
     public void SnapToClipPosition(Vector3 clipAttachPosition)
@@ -57,6 +62,7 @@ public class MetalPlate : MonoBehaviour
         rb.isKinematic = true;
     
         Debug.Log($"Snapped to clip position with offset: {offset}");
+        audioSource.PlayOneShot(click);
     }
 
     private void SnapRotationTo90Degrees()
@@ -143,29 +149,49 @@ public class MetalPlate : MonoBehaviour
             // Snap rotation
             SnapRotationTo90Degrees();
             
-            // FIXED: Set rigidbody to kinematic after snapping
             if (rb != null)
             {
                 rb.isKinematic = true;
             }
 
             Debug.Log($"Plates snapped! Offset applied: {offset}");
-            
-            
+            audioSource.PlayOneShot(click);
         }
     }
 
     public void BindPlates(MetalPlate clippedPlate)
     {
         if (OnClip) return;
-
-        // Set parent relationship
+        
+        TrySnapToOtherPlate(clippedPlate);
+        
         transform.SetParent(clippedPlate.transform);
         clippedPlate.attachedPlatesPoints.AddRange(attachedPlatesPoints);
+        
         clippedPlate.connectedPlates.Add(this);
-        clippedPlate.GetComponent<MetalPlateGrabInteractable>().colliders.Add(this.GetComponent<Collider>());
-        Destroy(gameObject.GetComponent<MetalPlateGrabInteractable>());
+        clippedPlate.connectedPlates.AddRange(this.connectedPlates);
+        
+        GetComponent<Outline>().enabled = false;
+        
+        var clippedPlateComponent = clippedPlate.GetComponent<MetalPlateGrabInteractable>();
+        var selfPlateComponent = this.GetComponent<MetalPlateGrabInteractable>();
+        clippedPlateComponent.RefreshColliders();
+        clippedPlateComponent.enabled = false;
+        clippedPlateComponent.enabled = true;
+        
+        Destroy(selfPlateComponent);
+        Destroy(gameObject.GetComponent<XRGeneralGrabTransformer>());
         Destroy(rb);
+        
+        GameManager.instance.XRInteractionManager.UnregisterInteractable((IXRInteractable)clippedPlateComponent);
+        GameManager.instance.XRInteractionManager.RegisterInteractable((IXRInteractable)clippedPlateComponent);
+
+        var Outline = clippedPlate.GetComponent<Outline>();
+        Outline.enabled = false;
+        Outline.enabled = true;
+        
+        
+        
 
         Debug.Log($"Plate {gameObject.name} bound to {clippedPlate.gameObject.name}");
     }

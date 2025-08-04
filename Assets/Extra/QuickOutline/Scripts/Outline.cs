@@ -80,8 +80,8 @@ public class Outline : MonoBehaviour {
 
   private bool needsUpdate;
 
-  void Awake() {
-
+  void OnEnable() {
+    
     // Cache renderers
     renderers = GetComponentsInChildren<Renderer>();
 
@@ -97,9 +97,8 @@ public class Outline : MonoBehaviour {
 
     // Apply material properties immediately
     needsUpdate = true;
-  }
-
-  void OnEnable() {
+    
+    
     foreach (var renderer in renderers) {
 
       // Append outline shaders
