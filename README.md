@@ -1,7 +1,9 @@
 # Welding Lab Simulation Internship Assignment
 Name : ********
+
 Goal : 
 To create a Welding setup as per the given requirements.
+
 Repository ; [Github](https://github.com/Kraaven/Welding-Lab-Simulation) --> [Release](https://github.com/Kraaven/Welding-Lab-Simulation/releases/tag/1.0.0) 
 ## Implementation
 The project was created after viewing the video provided in the materials.
