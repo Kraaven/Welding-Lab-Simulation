@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Clip
   - MetalPlate
+  - Clip
   layers:
   - Default
   - TransparentFX

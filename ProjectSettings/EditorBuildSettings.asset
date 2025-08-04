@@ -8,8 +8,11 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: e70ded5a8549180478835a015a75e6b0
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: dac3f56164a1900489a0ddf06324aa8b, type: 2}
-    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: c1b9bfd9c72a2884bb557b612649f45e, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 75c9af148bf0fc148831017a02cb4cf8, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: dd809c841d12ee148b13c9eb3d58f1e8, type: 2}
   m_UseUCBPForAssetBundles: 0

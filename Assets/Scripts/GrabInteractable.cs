@@ -15,6 +15,7 @@ public class GrabInteractable : XRGrabInteractable
         _objectOutline.OutlineColor = GameManager.instance.colorLibrary[GameManager.ColorType.GenericInteractable];
 
         useDynamicAttach = true;
+        _objectOutline.OutlineWidth = 2.5f;
     }
 
     protected override void OnHoverEntered(HoverEnterEventArgs args)

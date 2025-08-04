@@ -1,2 +1,0 @@
-# Welding-Lab-Simulation
-

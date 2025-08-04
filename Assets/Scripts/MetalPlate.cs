@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Transformers;
 
+
 public class MetalPlate : MonoBehaviour
 {
     public List<AttachPointCreator> attachedPlatesPoints = new();
